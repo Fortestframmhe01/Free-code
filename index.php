@@ -1,9 +1,9 @@
 <?php
 
-define('AUTO_FILE', 'หน้าหลัก');
-define('FILE_EXTEND', 'rmk');
+define('AUTO_FILE', 'หน้าหลัก'); // ไฟล์หลัก
+define('FILE_EXTEND', 'rmk'); // นามสกุลไฟล์
 
-function _readphp_eval($code) {
+function _readphp_eval($code) { // ฟังก์ชั่นอ่าน PHP
     ob_start();
     print eval('?>'. $code);
     $output = ob_get_contents();
@@ -12,7 +12,7 @@ function _readphp_eval($code) {
     return $output;
 }
 
-function _convert($data) {
+function _convert($data) { // ฟังก์ชั่นเปลี่ยนรูปแบบโค้ด ให้มาอยู่ในรูปแบบที่ถูกต้องของภาษา PHP
     $content = $data;
 
     /**
@@ -39,12 +39,12 @@ function _convert($data) {
     return $content;
 }
 
-global $sendParams;
+global $sendParams; // ตัวแปรที่จะส่งค่าไปให้ไฟล์ โปรแกรมของเรา
 
-if(isset($_SERVER['PATH_INFO'])) {
+if(isset($_SERVER['PATH_INFO'])) { // ตรวจสอบ Path
     if(count(explode('/', $_SERVER['PATH_INFO'])) > 1) {
         $urlInput = explode('/', $_SERVER['PATH_INFO']);
-        array_shift($urlInput);
+        array_shift($urlInput); // ถ้าเป็นเซิฟเวอร์จริง ให้ลบ array_shift ออก 1 ตัว
         array_shift($urlInput);
 
         $sendParams = $urlInput;
@@ -57,7 +57,7 @@ class RmkLang {
     public function __construct() {
         if(isset($_SERVER['PATH_INFO'])) {
             $getUrl = explode('/', $_SERVER['PATH_INFO']);
-            array_shift($getUrl);
+            array_shift($getUrl); // ถ้าใช้เซิฟเวอร์จริง ให้ลบบรรทัดนี้ออกได้เลย 
             $this->_fileAction = $getUrl[0];
 
             if(file_exists('app/' . $this->_fileAction . '.' . FILE_EXTEND)) {
